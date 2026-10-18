@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin | Harttech</title>
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Supabase client (loaded from a CDN, pinned version) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</head>
+<body class="inner-page admin-page">
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header solid" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo text-serif">Harttech</a>
+      <button type="button" class="btn-small" id="logout-btn" hidden>Log out</button>
+    </div>
+  </header>
+
+  <main id="main" class="admin-main">
+    <div class="container admin-wrap">
+
+      <p class="admin-notice" id="admin-notice" role="status" aria-live="polite"></p>
+
+      <!-- ========== LOGIN ========== -->
+      <section id="login-view" aria-labelledby="login-title" hidden>
+        <p class="text-script">Admin</p>
+        <h1 class="text-serif admin-title" id="login-title">Sign in</h1>
+
+        <form class="contact-form admin-login" id="login-form" novalidate>
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" name="email" autocomplete="username" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="password" autocomplete="current-password" required>
+          </div>
+          <button type="submit" class="btn-outline">Sign in</button>
+        </form>
+      </section>
+
+      <!-- ========== DASHBOARD ========== -->
+      <section id="dashboard-view" aria-labelledby="dash-title" hidden>
+        <p class="text-script">Dashboard</p>
+        <h1 class="text-serif admin-title" id="dash-title">Dashboard</h1>
+
+        <div class="admin-tabs" role="tablist" aria-label="Dashboard sections">
+          <button type="button" class="admin-tab active" role="tab" id="tab-team" aria-selected="true" aria-controls="team-panel" data-tab="team">Team</button>
+          <button type="button" class="admin-tab" role="tab" id="tab-members" aria-selected="false" aria-controls="members-panel" data-tab="members">Members</button>
+          <button type="button" class="admin-tab" role="tab" id="tab-messages" aria-selected="false" aria-controls="messages-panel" data-tab="messages">Messages</button>
+          <button type="button" class="admin-tab" role="tab" id="tab-projects" aria-selected="false" aria-controls="projects-panel" data-tab="projects">Projects</button>
+          <button type="button" class="admin-tab" role="tab" id="tab-updates" aria-selected="false" aria-controls="updates-panel" data-tab="updates">Updates</button>
+        </div>
+
+        <!-- ===== TEAM PANEL ===== -->
+        <div id="team-panel" role="tabpanel" aria-labelledby="tab-team">
+        <p class="admin-intro">People added here appear in the "Meet the Team" section of the About page.</p>
+
+        <!-- Add / edit form -->
+        <form class="admin-card" id="team-form" novalidate>
+          <h2 class="text-serif" id="team-form-title">Add a team member</h2>
+          <input type="hidden" id="team-id">
+
+          <div class="form-group">
+            <label for="team-name">Name</label>
+            <input type="text" id="team-name" maxlength="80" required>
+          </div>
+          <div class="form-group">
+            <label for="team-title">Role / title</label>
+            <input type="text" id="team-title" maxlength="80">
+          </div>
+          <div class="form-group">
+            <label for="team-bio">Short bio (optional)</label>
+            <textarea id="team-bio" rows="3" maxlength="500"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="team-photo">Photo (JPG, PNG or WebP, max 2 MB)</label>
+            <input type="file" id="team-photo" accept="image/jpeg,image/png,image/webp">
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" id="team-visible" checked>
+            <label for="team-visible">Show on the website</label>
+          </div>
+
+          <div class="admin-form-actions">
+            <button type="submit" class="btn-outline" id="team-save">Save</button>
+            <button type="button" class="btn-small" id="team-cancel" hidden>Cancel edit</button>
+          </div>
+        </form>
+
+        <!-- Current team -->
+        <h2 class="text-serif admin-subtitle">Current team</h2>
+        <ul class="admin-list" id="team-list"></ul>
+        </div>
+
+        <!-- ===== MEMBERS PANEL ===== -->
+        <div id="members-panel" role="tabpanel" aria-labelledby="tab-members" hidden>
+          <p class="admin-intro" id="member-summary">Loading members...</p>
+
+          <div class="member-tools">
+            <div class="form-group member-filter">
+              <label for="member-filter">Show</label>
+              <select id="member-filter">
+                <option value="all">All registrations</option>
+                <option value="pending">Pending approval</option>
+                <option value="active">Active members</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+            <div class="form-group member-search">
+              <label for="member-search">Search</label>
+              <input type="search" id="member-search" placeholder="Name or email" maxlength="80">
+            </div>
+            <button type="button" class="btn-small" id="member-export">Export CSV</button>
+          </div>
+
+          <ul class="admin-list" id="member-list"></ul>
+        </div>
+
+        <!-- ===== MESSAGES PANEL ===== -->
+        <div id="messages-panel" role="tabpanel" aria-labelledby="tab-messages" hidden>
+          <p class="admin-intro" id="message-summary">Loading messages...</p>
+          <ul class="admin-list" id="message-list"></ul>
+        </div>
+
+        <!-- ===== PROJECTS PANEL ===== -->
+        <div id="projects-panel" role="tabpanel" aria-labelledby="tab-projects" hidden>
+          <p class="admin-intro">Projects added here appear on the Projects page.</p>
+
+          <form class="admin-card" id="project-form" novalidate>
+            <h2 class="text-serif">Add a project</h2>
+            <div class="form-group">
+              <label for="project-title">Title</label>
+              <input type="text" id="project-title" maxlength="100" required>
+            </div>
+            <div class="form-group">
+              <label for="project-desc">Short description</label>
+              <textarea id="project-desc" rows="3" maxlength="400"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="project-link">Link (optional, must start with https://)</label>
+              <input type="url" id="project-link" maxlength="300" placeholder="https://">
+            </div>
+            <div class="form-group">
+              <label for="project-image">Screenshot (JPG, PNG or WebP, max 2 MB)</label>
+              <input type="file" id="project-image" accept="image/jpeg,image/png,image/webp">
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" id="project-visible" checked>
+              <label for="project-visible">Show on the website</label>
+            </div>
+            <button type="submit" class="btn-outline" id="project-save">Add project</button>
+          </form>
+
+          <h2 class="text-serif admin-subtitle">Current projects</h2>
+          <ul class="admin-list" id="project-list"></ul>
+        </div>
+
+        <!-- ===== UPDATES PANEL ===== -->
+        <div id="updates-panel" role="tabpanel" aria-labelledby="tab-updates" hidden>
+          <p class="admin-intro">Updates and events added here appear in "Latest Updates" on the Join Us page.</p>
+
+          <form class="admin-card" id="update-form" novalidate>
+            <h2 class="text-serif">Add an update</h2>
+            <div class="form-group">
+              <label for="update-title">Title</label>
+              <input type="text" id="update-title" maxlength="120" required>
+            </div>
+            <div class="form-group">
+              <label for="update-body">Details (optional)</label>
+              <textarea id="update-body" rows="3" maxlength="600"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="update-date">Event date (optional)</label>
+              <input type="date" id="update-date">
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" id="update-visible" checked>
+              <label for="update-visible">Show on the website</label>
+            </div>
+            <button type="submit" class="btn-outline" id="update-save">Publish</button>
+          </form>
+
+          <h2 class="text-serif admin-subtitle">Current updates</h2>
+          <ul class="admin-list" id="update-list-admin"></ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+</body>
+</html>

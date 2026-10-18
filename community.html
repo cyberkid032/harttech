@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Us | Harttech</title>
+  <meta name="description" content="Join the Harttech community of students, designers and developers learning and building together.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Harttech">
+  <meta property="og:title" content="Join Us | Harttech">
+  <meta property="og:description" content="Join the Harttech community of students, designers and developers learning and building together.">
+  <meta property="og:url" content="https://your-domain.com/community.html">
+  <meta property="og:image" content="https://your-domain.com/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://your-domain.com/community.html">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/updates.js" defer></script>
+  <script src="js/script.js" defer></script>
+</head>
+<body class="inner-page">
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header solid" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo text-serif">Harttech</a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="projects.html" class="nav-link">Projects</a></li>
+          <li><a href="community.html" class="nav-link active" aria-current="page">Join Us</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ========== REGISTER (top of page) ========== -->
+    <section class="section section-register" aria-labelledby="register-title">
+      <div class="container register-top reveal">
+        <p class="text-script">Become a member</p>
+        <h1 class="text-serif" id="register-title">Register to Be Our Member</h1>
+        <p class="register-text">Registration is free and takes a minute. Join a community of students, designers and developers learning and building together.</p>
+        <button type="button" class="btn-outline" id="open-register" data-open-register>Register Now</button>
+      </div>
+    </section>
+
+    <!-- ========== WHY JOIN ========== -->
+    <section class="section section-why" aria-labelledby="whyjoin-title">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="text-script">Why join</p>
+          <h2 class="text-serif" id="whyjoin-title">Grow With Us</h2>
+        </div>
+
+        <div class="card-grid card-grid-3">
+          <article class="card reveal">
+            <span class="card-number text-serif">01</span>
+            <h3 class="text-serif">Learn Together</h3>
+            <p>Workshops, study sessions and mentors to help you pick up web, design and tech skills faster.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card-number text-serif">02</span>
+            <h3 class="text-serif">Build Real Projects</h3>
+            <p>Team up on practical projects that make your portfolio stand out.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card-number text-serif">03</span>
+            <h3 class="text-serif">Meet Your People</h3>
+            <p>Connect with students and professionals who share your curiosity.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== LATEST UPDATES (loaded from the database) ========== -->
+    <section class="section section-updates" id="updates" aria-labelledby="updates-title" hidden>
+      <div class="container">
+        <div class="section-heading">
+          <p class="text-script">What's on</p>
+          <h2 class="text-serif" id="updates-title">Latest Updates</h2>
+        </div>
+        <ul class="update-list" id="update-list"></ul>
+      </div>
+    </section>
+
+    <!-- ========== REGISTRATION FORM (opens as a pop-up) ========== -->
+    <dialog class="register-dialog" id="register-dialog" aria-labelledby="join-title">
+      <div class="dialog-inner">
+        <button type="button" class="dialog-close" data-close-register aria-label="Close registration form">&times;</button>
+        <p class="text-script">Membership</p>
+        <h2 class="text-serif" id="join-title">Register</h2>
+        <p class="dialog-text">It's free. Fill in your details and we'll email you a welcome message with how to get started.</p>
+
+        <!-- Form (validated and saved by js/script.js) -->
+        <form class="contact-form" id="join-form" novalidate>
+
+          <div class="form-group">
+            <label for="join-name">Full name</label>
+            <input type="text" id="join-name" name="name" autocomplete="name" required aria-describedby="join-name-error">
+            <p class="form-error" id="join-name-error" role="alert"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="join-email">Email address</label>
+            <input type="email" id="join-email" name="email" autocomplete="email" required aria-describedby="join-email-error">
+            <p class="form-error" id="join-email-error" role="alert"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="join-interest">I'm interested in</label>
+            <select id="join-interest" name="interest" required aria-describedby="join-interest-error">
+              <option value="">Choose one</option>
+              <option value="web">Web development</option>
+              <option value="design">UI / UX design</option>
+              <option value="security">Cybersecurity</option>
+              <option value="other">Something else</option>
+            </select>
+            <p class="form-error" id="join-interest-error" role="alert"></p>
+          </div>
+
+          <!-- Spam trap: real people never see or fill this -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="join-website">Leave this field empty</label>
+            <input type="text" id="join-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" id="join-consent" name="consent" required aria-describedby="join-consent-error">
+              <label for="join-consent">I agree that Harttech may store my name and email to manage my membership, as described in the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</label>
+            </div>
+            <p class="form-error" id="join-consent-error" role="alert"></p>
+          </div>
+
+          <button type="submit" class="btn-outline">Register Now</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </dialog>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="logo text-serif">Harttech</p>
+      <p class="text-script footer-script">Crafted with care</p>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="community.html">Join Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Harttech. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
